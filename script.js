@@ -1,3 +1,6 @@
+let playerScore = 0;
+let computerScore = 0;
+
 function getComputerChoice() { 
     const computerChoice = Math.floor(Math.random()*3) + 1;
     if (computerChoice === 1) {
@@ -11,6 +14,7 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerChoice) {
     let scoreText = " You: " + playerScore + " Computer: " + computerScore;
+    let result;
 
     if (playerSelection === computerChoice) {
         return "It's a draw" + scoreText;
@@ -18,33 +22,34 @@ function playRound(playerSelection, computerChoice) {
 
     if (playerSelection === "rock") {
        if (computerChoice === "paper") {
-        computerScore += 1;
-        return "You Lose! " + computerChoice + " beats " + playerSelection + scoreText;
+        ++computerScore;
+        result = "You Lose! " + computerChoice + " beats " + playerSelection + scoreText;
        } else {
-        playerScore += 1;
-        return "You Win! " + playerSelection + " beats " + computerChoice + scoreText;
+        ++playerScore;
+        result = "You Win! " + playerSelection + " beats " + computerChoice + scoreText;
        }
     }
 
     if (playerSelection === "paper") {
         if (computerChoice === "scissors") {
-            computerScore += 1;
-            return "You Lose! " + computerChoice + " beats " + playerSelection + scoreText;
+            ++computerScore;
+            result = "You Lose! " + computerChoice + " beats " + playerSelection + scoreText;
            } else {
-            playerScore += 1;
-            return "You Win! " + playerSelection + " beats " + computerChoice + scoreText;
+            ++playerScore;
+            result =  "You Win! " + playerSelection + " beats " + computerChoice + scoreText;
            }
     }
 
     if (playerSelection === "scissors") {
         if (computerChoice === "rock") {
-            computerScore += 1;
-            return "You Lose! " + computerChoice + " beats " + playerSelection + scoreText;
+            ++computerScore;
+            result = "You Lose! " + computerChoice + " beats " + playerSelection + scoreText;
            } else {
-            playerScore += 1;
-            return "You Win! " + playerSelection + " beats " + computerChoice + scoreText;
+            ++playerScore;
+            result = "You Win! " + playerSelection + " beats " + computerChoice + scoreText;
            }
     }
+    return result;
 }
 
 function game() {
@@ -56,8 +61,6 @@ function game() {
     
 }
 
-let playerScore = 0;
-let computerScore = 0;
 
 for (let i = 0; i < 5; i++) {
     game();
