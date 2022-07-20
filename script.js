@@ -1,5 +1,6 @@
 let playerScore = 0;
 let computerScore = 0;
+let scoreText = " You: " + playerScore + " Computer: " + computerScore;
 
 function getComputerChoice() { 
     const computerChoice = Math.floor(Math.random()*3) + 1;
@@ -13,41 +14,21 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerChoice) {
-    let scoreText = " You: " + playerScore + " Computer: " + computerScore;
-    let result;
+    let result = "";
 
     if (playerSelection === computerChoice) {
-        return "It's a draw" + scoreText;
+        result = "It's a draw" + scoreText;
     } 
-
-    if (playerSelection === "rock") {
-       if (computerChoice === "paper") {
-        ++computerScore;
-        result = "You Lose! " + computerChoice + " beats " + playerSelection + scoreText;
-       } else {
+    
+    if ((playerSelection === "rock" && computerChoice === "scissors") || (playerSelection === "paper" && computerChoice === "rock") || 
+    (playerSelection === "scissors" && computerChoice === "paper")) {
         ++playerScore;
+        console.log("Player: " + playerScore);
         result = "You Win! " + playerSelection + " beats " + computerChoice + scoreText;
-       }
-    }
-
-    if (playerSelection === "paper") {
-        if (computerChoice === "scissors") {
-            ++computerScore;
-            result = "You Lose! " + computerChoice + " beats " + playerSelection + scoreText;
-           } else {
-            ++playerScore;
-            result =  "You Win! " + playerSelection + " beats " + computerChoice + scoreText;
-           }
-    }
-
-    if (playerSelection === "scissors") {
-        if (computerChoice === "rock") {
-            ++computerScore;
-            result = "You Lose! " + computerChoice + " beats " + playerSelection + scoreText;
-           } else {
-            ++playerScore;
-            result = "You Win! " + playerSelection + " beats " + computerChoice + scoreText;
-           }
+    } else {
+        ++computerScore;
+        console.log("Computer: " + computerScore);
+        result = "You Lose! " + computerChoice + " beats " + playerSelection + scoreText; 
     }
     return result;
 }
