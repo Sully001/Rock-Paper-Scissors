@@ -1,5 +1,5 @@
-playerScore = 0
-computerScore = 0
+playerScore = 0;
+computerScore = 0;
 
 // Get random choice from 1 to 3
 let getComputerChoice =  () => {
@@ -16,23 +16,14 @@ let getComputerChoice =  () => {
     return result
 }
 
-
-let getHumanChoice = () => {
-    let playerChoice = prompt("Choose rock, paper or scissors!")
-    return playerChoice.toLowerCase()
-};
-
-
 let playRound = (humanChoice, computerChoice) => {
     let result
 
     //Rule set
     if (humanChoice === computerChoice) {
         result = "Draw"
-    } else if (humanChoice === "rock" && computerChoice === "paper") {
-        result = "Computer Wins!"
-        computerScore += 1
-    } else if (humanChoice === "rock" && computerChoice === "scissors") {
+    } else if (humanChoice === "rock" && computerChoice === "scissors" || humanChoice === "paper" && computerChoice == "rock" 
+    || humanChoice === "scissors" && computerChoice === "paper") {
         result = "Player Wins!"
         playerScore += 1
     } else {
@@ -40,19 +31,40 @@ let playRound = (humanChoice, computerChoice) => {
         computerScore += 1
     }
 
-    console.log(humanChoice, computerChoice)
-
     return result
 }
 
-let playGame = () => {
-    for (let index = 0; index < 5; index++) {
-        playRound(getHumanChoice(), getComputerChoice())
-        console.log(`Player: ${playerScore} | Computer: ${computerScore}`)
-    }
-    console.log(" ")
-    if (playerScore > computerScore) { console.log("Player Wins!")}
-    else { console.log("Computer Wins!")}
-}
+playerText = document.createElement("p");
+computerText = document.createElement("p");
 
-playGame()
+const choicesMade = document.querySelector(".choices-made")
+const winner = document.querySelector(".winner")
+
+
+// Event listeners for buttons
+const humanChoices = document.querySelectorAll(".choice")
+
+humanChoices.forEach((choice) => {
+    choice.addEventListener('click', (e) => {
+        if (playerScore === 0 || computerScore === 0) {
+            winner.textContent = ""
+        }
+        computerChoicePlaceholder = getComputerChoice()
+        roundWinner = playRound(e.target.classList[1], computerChoicePlaceholder);
+        const score = document.querySelector(".scores");
+
+        playerText.textContent = `Player chose: ${e.target.classList[1]}`
+        computerText.textContent = `Computer chose: ${computerChoicePlaceholder}`
+
+        choicesMade.appendChild(playerText);
+        choicesMade.appendChild(computerText)
+
+        score.textContent = `Player: ${playerScore} Computer: ${computerScore}`;
+
+        if (playerScore === 5 || computerScore === 5) {
+            winner.textContent = (playerScore > computerScore) ? "Player Wins!" : "Computer Wins";
+            resetGame()
+        }
+    })
+})
+
